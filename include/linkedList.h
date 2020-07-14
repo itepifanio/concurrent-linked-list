@@ -15,9 +15,10 @@ class LinkedList{
         std::vector<std::thread> r;
     public:
         LinkedList();
-        void search(int value);
+        bool search(int value);
         void insert(int data);
         void remove(int index);
+        void print();
 };
 
 #endif
