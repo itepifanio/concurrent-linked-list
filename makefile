@@ -1,7 +1,7 @@
 PROG = bin/exec
 CC = g++ -pthread
 CPPFLAGS = -O0 -g -W -Wall -pedantic -std=c++11
-OBJS = main.o linkedList.o
+OBJS = main.o linkedList.o handler.o
 
 $(PROG) : $(OBJS)
 	$(CC) $(OBJS) -o $(PROG)
@@ -12,6 +12,9 @@ main.o: include/linkedList.h
 
 linkedList.o: include/linkedList.h
 	$(CC) $(CPPFLAGS) -c src/linkedList.cpp
+
+handler.o: include/handler.h include/linkedList.h
+	$(CC) $(CPPFLAGS) -c src/handler.cpp	
 
 clean:
 	rm -f build/*.o

@@ -1,22 +1,24 @@
-#include "../include/linkedList.h"
+#include "../include/handler.h"
 #include <iostream>
 
 int main(){
-    LinkedList l;
+    // LinkedList l;
     
-    l.insert(1);
-    l.insert(2);
-    l.insert(3);
-    l.insert(4);
-    l.insert(5);
+    // l.insert(1);
+    // l.insert(2);
+    // l.insert(3);
+    // l.insert(4);
+    // l.insert(5);
 
-    l.print();
+    // l.print();
 
-    std::cout << l.search(2) << std::endl;
+    // std::cout << l.search(2) << std::endl;
 
-    l.remove(2);
+    // l.remove(2);
 
-    l.print();
+    // l.print();
+
+    Handler h(1);
 
     return 0;
 }
