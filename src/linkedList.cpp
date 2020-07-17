@@ -3,8 +3,14 @@
 #include <algorithm>
 #include <list>
 #include <iostream>
+#include <mutex>
 
-LinkedList::LinkedList() {}
+LinkedList::LinkedList()
+{
+    this->removes = 0;
+    this->searchs = 0;
+    this->inserts = 0;
+}
 LinkedList::~LinkedList() {}
 
 /** used by threads b
@@ -20,18 +26,47 @@ bool LinkedList::search(int value)
  * can run with threads b, but not concurrenty with threads r and itself */
 void LinkedList::insert(int data)
 {
+
+    while (this->removes != 0)
+    {
+    } // wait removes
+
+    // if (this->removes == 0)
+    // {
+    this->inserts += 1;
     std::cout << "thread id: " << std::this_thread::get_id() << " inserting data: " << data << std::endl;
     this->list.push_back(data);
+    this->inserts -= 1;
+    // }
 }
 
 /** used be threads r
  * once used this could not be used by any other threads */
 void LinkedList::remove(int index)
 {
-    std::cout << "thread id: " << std::this_thread::get_id() << " removing index: " << index << std::endl;
-    std::list<int>::iterator it = this->list.begin();
-    std::advance(it, index);
-    this->list.erase(it);
+    this->removes += 1;
+    while (this->inserts != 0)
+    {
+    } // wait inserts done
+    this->m1.lock();
+    if (index != -1)
+    {
+        try
+        {
+            std::cout << "thread id: " << std::this_thread::get_id() << " removing index: " << index << std::endl;
+            std::list<int>::iterator it = this->list.begin();
+            std::advance(it, index);
+            this->list.erase(it);
+        }
+        catch (...)
+        {
+            this->m1.unlock();
+            this->removes -= 1;
+            return;
+        }
+    }
+    this->m1.unlock();
+    this->removes -= 1;
 }
 
 void LinkedList::print()

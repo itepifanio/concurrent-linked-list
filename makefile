@@ -1,6 +1,6 @@
 PROG = bin/exec
 CC = g++ -pthread
-CPPFLAGS = -O0 -g -W -Wall -pedantic -std=c++11
+CPPFLAGS = -O0 -g -W -Wall -pedantic -std=c++17
 OBJS = main.o linkedList.o handler.o
 
 $(PROG) : $(OBJS)
