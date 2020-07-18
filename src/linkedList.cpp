@@ -17,8 +17,13 @@ LinkedList::~LinkedList() {}
  * can be used concurrently others threads */
 bool LinkedList::search(int value)
 {
+    while (this->removes != 0)
+    {
+    }  // wait removes
+    this->searchs += 1;
     std::cout << "thread id: " << std::this_thread::get_id() << " searching for value: " << value << std::endl;
     std::list<int>::iterator it = std::find(this->list.begin(), this->list.end(), value);
+    this->searchs -= 1;
     return it != this->list.end(); // return true if find
 }
 
