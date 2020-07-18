@@ -2,7 +2,7 @@
 #include <iostream>
 
 int main(){
-    Handler h(10);
+    Handler h(100);
 
     return 0;
 }

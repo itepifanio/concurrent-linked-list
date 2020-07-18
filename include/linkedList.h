@@ -13,9 +13,11 @@ class LinkedList{
         ~LinkedList();
         mutable std::mutex mutexR;
         mutable std::mutex mutexI;
-        int searchs;
+        int searchs; // searchs 
         int inserts;
         int removes;
+        int searchOrInsertOperations;
+        bool canRemove;
         bool search(int value);
         void insert(int data);
         void remove(int index);
