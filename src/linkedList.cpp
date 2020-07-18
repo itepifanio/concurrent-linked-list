@@ -26,18 +26,15 @@ bool LinkedList::search(int value)
  * can run with threads b, but not concurrenty with threads r and itself */
 void LinkedList::insert(int data)
 {
-
     while (this->removes != 0)
     {
-    } // wait removes
-
-    // if (this->removes == 0)
-    // {
+    }                    // wait removes
+    this->mutexI.lock(); // inserts must be mutal exclusive
     this->inserts += 1;
     std::cout << "thread id: " << std::this_thread::get_id() << " inserting data: " << data << std::endl;
     this->list.push_back(data);
     this->inserts -= 1;
-    // }
+    this->mutexI.unlock();
 }
 
 /** used be threads r
@@ -48,24 +45,22 @@ void LinkedList::remove(int index)
     while (this->inserts != 0)
     {
     } // wait inserts done
-    this->m1.lock();
+    
+    this->mutexR.lock(); // removes must be mutual exclusive
     if (index != -1)
     {
-        try
+        if (index < this->end())
         {
             std::cout << "thread id: " << std::this_thread::get_id() << " removing index: " << index << std::endl;
             std::list<int>::iterator it = this->list.begin();
             std::advance(it, index);
             this->list.erase(it);
-        }
-        catch (...)
-        {
-            this->m1.unlock();
-            this->removes -= 1;
-            return;
+        } else {
+            std::cout << "thread id: " << std::this_thread::get_id() 
+                      << " not removing. Index ("  << index  << ") is invalid" << std::endl;
         }
     }
-    this->m1.unlock();
+    this->mutexR.unlock();
     this->removes -= 1;
 }
 

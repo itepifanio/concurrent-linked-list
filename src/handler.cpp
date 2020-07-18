@@ -47,7 +47,7 @@ Handler::Handler(int numThreads)
     LinkedList l;
     std::thread t1 = std::thread(&LinkedList::insert, &l, std::rand() % 100);
     std::thread t2 = std::thread(&LinkedList::insert, &l, std::rand() % 100);
-    std::thread t3 = std::thread(&LinkedList::remove, &l, 0);
+    std::thread t3 = std::thread(&LinkedList::remove, &l, 1);
     t1.join();
     t2.join();
     t3.join();

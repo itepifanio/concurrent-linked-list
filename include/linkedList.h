@@ -11,7 +11,8 @@ class LinkedList{
 
         LinkedList();
         ~LinkedList();
-        mutable std::mutex m1;
+        mutable std::mutex mutexR;
+        mutable std::mutex mutexI;
         int searchs;
         int inserts;
         int removes;
