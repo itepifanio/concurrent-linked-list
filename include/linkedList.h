@@ -16,6 +16,15 @@ class LinkedList{
         int searchs;
         int inserts;
         int removes;
+        bool sendSignalToStopRemoveOperation;
+        bool waitForSearchOrInserts;
+        bool canContinueRemoval;
+        
+        // calculate the number of iterations that has been executed 
+        // when the threads are waiting
+        int searchOrInsertOperation;
+        int removeOperation;
+        
         bool search(int value);
         void insert(int data);
         void remove(int index);
